@@ -13,6 +13,7 @@ Sets view distance for player in chunks.
 Gets view distance for player in chunks.
 
 ### World Mob Spawning Control
+These functions are not Paper-specific and will likely be moved to CommandHelper core at some point under different function names. I forgot to remove them before publishing, but enjoy them for now.
 
 #### array get_spawning(world)
 Gets the entity spawn settings for this world.
