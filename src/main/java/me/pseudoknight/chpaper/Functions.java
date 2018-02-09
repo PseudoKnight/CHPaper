@@ -1,23 +1,29 @@
 package me.pseudoknight.chpaper;
 
 import com.laytonsmith.PureUtilities.Version;
+import com.laytonsmith.abstraction.MCLivingEntity;
+import com.laytonsmith.abstraction.MCPlayer;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.CHVersion;
 import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.CBoolean;
 import com.laytonsmith.core.constructs.CInt;
+import com.laytonsmith.core.constructs.CNull;
 import com.laytonsmith.core.constructs.CVoid;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.environments.CommandHelperEnvironment;
 import com.laytonsmith.core.environments.Environment;
+import com.laytonsmith.core.exceptions.CRE.CREBadEntityException;
 import com.laytonsmith.core.exceptions.CRE.CREFormatException;
+import com.laytonsmith.core.exceptions.CRE.CRELengthException;
 import com.laytonsmith.core.exceptions.CRE.CREPlayerOfflineException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class Functions {
@@ -227,6 +233,50 @@ public class Functions {
 
 		public String docs() {
 			return "void {world, settingsArray} Sets the entity spawn settings for this world.";
+		}
+
+		public Version since() {
+			return CHVersion.V3_3_2;
+		}
+
+	}
+
+	@api
+	public static class set_mob_killer extends AbstractFunction {
+
+		public Class<? extends CREThrowable>[] thrown() {
+			return new Class[]{CREBadEntityException.class, CREPlayerOfflineException.class, CRELengthException.class};
+		}
+
+		public boolean isRestricted() {
+			return true;
+		}
+
+		public Boolean runAsync() {
+			return false;
+		}
+
+		public Construct exec(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
+			MCLivingEntity mob = Static.getLivingEntity(args[0], t);
+			if(args[1] instanceof CNull) {
+				((LivingEntity) mob.getHandle()).setKiller(null);
+			} else {
+				MCPlayer player = Static.GetPlayer(args[1], t);
+				((LivingEntity) mob.getHandle()).setKiller((Player) player.getHandle());
+			}
+			return CVoid.VOID;
+		}
+
+		public String getName() {
+			return "set_mob_killer";
+		}
+
+		public Integer[] numArgs() {
+			return new Integer[]{2};
+		}
+
+		public String docs() {
+			return "void {entity, player} Sets the killer of a mob/player to the specified player.";
 		}
 
 		public Version since() {
