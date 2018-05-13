@@ -13,7 +13,6 @@ import com.laytonsmith.core.constructs.CNull;
 import com.laytonsmith.core.constructs.CVoid;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
-import com.laytonsmith.core.environments.CommandHelperEnvironment;
 import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.exceptions.CRE.CREBadEntityException;
 import com.laytonsmith.core.exceptions.CRE.CREFormatException;
@@ -28,97 +27,7 @@ import org.bukkit.entity.Player;
 
 public class Functions {
 	public static String docs() {
-		return "These functions provide a methodscript interface for PaperSpigot specific methods.";
-	}
-
-	@api
-	public static class set_pview_distance extends AbstractFunction {
-
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[]{CREPlayerOfflineException.class};
-		}
-
-		public boolean isRestricted() {
-			return true;
-		}
-
-		public Boolean runAsync() {
-			return false;
-		}
-
-		public Construct exec(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
-			Player p;
-			int distance;
-			if(args.length == 1) {
-				p = (Player) environment.getEnv(CommandHelperEnvironment.class).GetPlayer().getHandle();
-				distance = Static.getInt32(args[0], t);
-			} else {
-				p = (Player) Static.GetPlayer(args[0], t).getHandle();
-				distance = Static.getInt32(args[1], t);
-			}
-			p.setViewDistance(distance);
-			return CVoid.VOID;
-		}
-
-		public String getName() {
-			return "set_pview_distance";
-		}
-
-		public Integer[] numArgs() {
-			return new Integer[]{1, 2};
-		}
-
-		public String docs() {
-			return "void {[player], distance} Sets view distance for player in chunks.";
-		}
-
-		public Version since() {
-			return CHVersion.V3_3_2;
-		}
-
-	}
-
-	@api
-	public static class pview_distance extends AbstractFunction {
-
-		public Class<? extends CREThrowable>[] thrown() {
-			return new Class[]{CREPlayerOfflineException.class};
-		}
-
-		public boolean isRestricted() {
-			return true;
-		}
-
-		public Boolean runAsync() {
-			return false;
-		}
-
-		public Construct exec(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
-			Player p;
-			if(args.length == 0) {
-				p = (Player) environment.getEnv(CommandHelperEnvironment.class).GetPlayer().getHandle();
-			} else {
-				p = (Player) Static.GetPlayer(args[0], t).getHandle();
-			}
-			return new CInt(p.getViewDistance(), t);
-		}
-
-		public String getName() {
-			return "pview_distance";
-		}
-
-		public Integer[] numArgs() {
-			return new Integer[]{0, 1};
-		}
-
-		public String docs() {
-			return "void {[player]} Gets view distance for player in chunks.";
-		}
-
-		public Version since() {
-			return CHVersion.V3_3_2;
-		}
-
+		return "General functions using the Paper API.";
 	}
 
 	@api

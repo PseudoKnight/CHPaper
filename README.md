@@ -1,11 +1,17 @@
 # CHPaper
 
-Gives access to API available in Paper but not Bukkit or Spigot.
+Gives access to API available in Paper but not Bukkit or Spigot. Only supports 1.12.2 since most API additions were added later.
 
 ## Function Documentation
 
-### View Distance
-These functions allow you to set view distance per player. There's some quirks to note, however. If player view distance is greater than world view distance, entity tracking range will be limited to the world's view distance. If player view distance is less than world view distance, chunks will still be sent according to world view distance when crossing chunk boundaries.
+### Player Management
+#### boolean get_paffects_spawning([player])
+Gets whether or not this player affects mob spawning.
+
+#### void set_paffects_spawning([player], boolean)
+Sets whether or not this player affects mob spawning.
+
+The following functions allow you to set view distance per player. There's some quirks to note, however. If player view distance is greater than world view distance, entity tracking range will be limited to the world's view distance. If player view distance is less than world view distance, chunks will still be sent according to world view distance when crossing chunk boundaries.
 
 #### void set_pview_distance([player], distance)
 Sets view distance for player in chunks.
