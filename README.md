@@ -5,6 +5,7 @@ Gives access to API available in Paper but not Bukkit or Spigot.
 ## Function Documentation
 
 ### View Distance
+These functions allow you to set view distance per player. There's some quirks to note, however. If player view distance is greater than world view distance, entity tracking range will be limited to the world's view distance. If player view distance is less than world view distance, chunks will still be sent according to world view distance when crossing chunk boundaries.
 
 #### void set_pview_distance([player], distance)
 Sets view distance for player in chunks.
@@ -20,6 +21,11 @@ Gets the entity spawn settings for this world.
 
 #### void set_spawning(world, settingsArray)
 Sets the entity spawn settings for this world.
+
+### Mob Management
+
+#### void set_mob_killer(entityID, player)
+Sets the killer of a mob/player to the specified player.
 
 ## Event Documentation
 
