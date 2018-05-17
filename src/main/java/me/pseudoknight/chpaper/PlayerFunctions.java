@@ -50,7 +50,7 @@ public class PlayerFunctions {
 				p = Static.GetPlayer(args[0], t);
 				distance = Static.getInt32(args[1], t);
 			}
-			((Player) p).setViewDistance(distance);
+			((Player) p.getHandle()).setViewDistance(distance);
 			return CVoid.VOID;
 		}
 
@@ -95,7 +95,7 @@ public class PlayerFunctions {
 			} else {
 				p = Static.GetPlayer(args[0], t);
 			}
-			return new CInt(((Player) p).getViewDistance(), t);
+			return new CInt(((Player) p.getHandle()).getViewDistance(), t);
 		}
 
 		public Class<? extends CREThrowable>[] thrown() {
@@ -139,7 +139,7 @@ public class PlayerFunctions {
 				p = env.getEnv(CommandHelperEnvironment.class).GetPlayer();
 				Static.AssertPlayerNonNull(p, t);
 			}
-			return CBoolean.get(((Player) p).getAffectsSpawning());
+			return CBoolean.get(((Player) p.getHandle()).getAffectsSpawning());
 		}
 
 		public Class<? extends CREThrowable>[] thrown() {
@@ -186,7 +186,7 @@ public class PlayerFunctions {
 				Static.AssertPlayerNonNull(p, t);
 				doesAffect = Static.getBoolean(args[0]);
 			}
-			((Player) p).setAffectsSpawning(doesAffect);
+			((Player) p.getHandle()).setAffectsSpawning(doesAffect);
 			return CVoid.VOID;
 		}
 

@@ -10,7 +10,7 @@ import me.pseudoknight.chpaper.abstraction.paper.PaperListeners;
 public class Extension extends AbstractExtension {
 
 	public Version getVersion() {
-		return new SimpleVersion(0,2,0);
+		return new SimpleVersion(0,2,1);
 	}
 
 	@Override
