@@ -105,13 +105,12 @@
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>commandhelper</artifactId>
-            <version>3.3.2-SNAPSHOT</version>
+            <version>3.3.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

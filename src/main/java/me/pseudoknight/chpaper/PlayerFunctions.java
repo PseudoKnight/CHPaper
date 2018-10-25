@@ -180,11 +180,11 @@ public class PlayerFunctions {
 			boolean doesAffect;
 			if(args.length == 2) {
 				p = Static.GetPlayer(args[0].val(), t);
-				doesAffect = Static.getBoolean(args[1]);
+				doesAffect = Static.getBoolean(args[1], t);
 			} else {
 				p = env.getEnv(CommandHelperEnvironment.class).GetPlayer();
 				Static.AssertPlayerNonNull(p, t);
-				doesAffect = Static.getBoolean(args[0]);
+				doesAffect = Static.getBoolean(args[0], t);
 			}
 			((Player) p.getHandle()).setAffectsSpawning(doesAffect);
 			return CVoid.VOID;

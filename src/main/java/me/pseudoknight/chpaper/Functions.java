@@ -100,10 +100,10 @@ public class Functions {
 				boolean animalspawns = w.getAllowAnimals();
 				boolean monsterspawns = w.getAllowMonsters();
 				if(values.containsKey("animal-spawns")) {
-					animalspawns = Static.getBoolean(values.get("animal-spawns", t));
+					animalspawns = Static.getBoolean(values.get("animal-spawns", t), t);
 				}
 				if(values.containsKey("monster-spawns")) {
-					monsterspawns = Static.getBoolean(values.get("monster-spawns", t));
+					monsterspawns = Static.getBoolean(values.get("monster-spawns", t), t);
 				}
 				w.setSpawnFlags(monsterspawns, animalspawns);
 

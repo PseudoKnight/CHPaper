@@ -79,7 +79,7 @@ public class Events {
 			map.put("location", ObjectGenerator.GetGenerator().location(event.getBlock().getLocation()));
 			MCLivingEntity.MCEffect eff = event.getEffect();
 			CArray effect = CArray.GetAssociativeArray(t);
-			effect.set("id", new CInt(eff.getPotionID(), t), t);
+			effect.set("id", new CInt(eff.getPotionEffectType().getId(), t), t);
 			effect.set("strength", new CInt(eff.getStrength(), t), t);
 			effect.set("seconds",  new CDouble(eff.getTicksRemaining() / 20.0, t), t);
 			effect.set("ambient", CBoolean.get(eff.isAmbient()), t);
@@ -99,8 +99,8 @@ public class Events {
 					int id = Static.getInt32(ca.get("id", t), t);
 					int strength = Static.getInt32(ca.get("strength", t), t);
 					double seconds = Static.getDouble(ca.get("seconds", t), t);
-					boolean ambient = Static.getBoolean(ca.get("ambient", t));
-					boolean particles = Static.getBoolean(ca.get("particles", t));
+					boolean ambient = Static.getBoolean(ca.get("ambient", t), t);
+					boolean particles = Static.getBoolean(ca.get("particles", t), t);
 					event.setEffect(id, strength, (int)(seconds * 20), ambient, particles);
 					return true;
 				} else {

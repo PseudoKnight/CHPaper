@@ -11,6 +11,7 @@ import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
 import com.laytonsmith.abstraction.bukkit.blocks.BukkitMCBlock;
 import com.laytonsmith.abstraction.bukkit.entities.BukkitMCPlayer;
 import com.laytonsmith.abstraction.bukkit.events.BukkitPlayerEvents.BukkitMCPlayerEvent;
+import com.laytonsmith.abstraction.enums.bukkit.BukkitMCPotionEffectType;
 import com.laytonsmith.annotations.abstraction;
 import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
@@ -31,8 +32,8 @@ public class PaperEvents {
 		@Override
 		public MCLivingEntity.MCEffect getEffect(){
 			PotionEffect pe = e.getEffect();
-			return new MCLivingEntity.MCEffect(pe.getType().getId(), pe.getAmplifier(),
-					pe.getDuration(), pe.isAmbient(), pe.hasParticles());
+			return new MCLivingEntity.MCEffect(BukkitMCPotionEffectType.valueOfConcrete(pe.getType()),
+					pe.getAmplifier(), pe.getDuration(), pe.isAmbient(), pe.hasParticles());
 		}
 
 		@Override
