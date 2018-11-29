@@ -1,6 +1,6 @@
 # CHPaper
 
-Gives access to API available in Paper but not Bukkit or Spigot. Only supports 1.12.2 since most API additions were added later.
+Gives access to API available in Paper but not Bukkit or Spigot.
 
 ## Function Documentation
 

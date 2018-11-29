@@ -3,7 +3,7 @@ package me.pseudoknight.chpaper;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCLivingEntity;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.CHVersion;
+import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.ObjectGenerator;
 import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.CArray;
@@ -11,7 +11,6 @@ import com.laytonsmith.core.constructs.CBoolean;
 import com.laytonsmith.core.constructs.CDouble;
 import com.laytonsmith.core.constructs.CInt;
 import com.laytonsmith.core.constructs.CString;
-import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.events.AbstractEvent;
 import com.laytonsmith.core.events.BindableEvent;
@@ -19,6 +18,7 @@ import com.laytonsmith.core.events.Driver;
 import com.laytonsmith.core.exceptions.CRE.CRECastException;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
+import com.laytonsmith.core.natives.interfaces.Mixed;
 import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
 
@@ -61,18 +61,18 @@ public class Events {
 
 		@Override
 		public Version since() {
-			return CHVersion.V3_3_2;
+			return MSVersion.V3_3_2;
 		}
 
 		@Override
-		public boolean matches(Map<String, Construct> prefilter, BindableEvent e) throws PrefilterNonMatchException {
+		public boolean matches(Map<String, Mixed> prefilter, BindableEvent e) throws PrefilterNonMatchException {
 			return e instanceof MCBeaconEffectEvent;
 		}
 
 		@Override
-		public Map<String, Construct> evaluate(BindableEvent e) throws EventException {
+		public Map<String, Mixed> evaluate(BindableEvent e) throws EventException {
 			MCBeaconEffectEvent event = (MCBeaconEffectEvent) e;
-			Map<String, Construct> map = new HashMap<>();
+			Map<String, Mixed> map = new HashMap<>();
 			Target t = Target.UNKNOWN;
 
 			map.put("player", new CString(event.getPlayer().getName(), t));
@@ -90,7 +90,7 @@ public class Events {
 		}
 
 		@Override
-		public boolean modifyEvent(String key, Construct value, BindableEvent e) {
+		public boolean modifyEvent(String key, Mixed value, BindableEvent e) {
 			MCBeaconEffectEvent event = (MCBeaconEffectEvent)e;
 			if(key.equals("effect")){
 				Target t = value.getTarget();
@@ -141,11 +141,11 @@ public class Events {
 
 		@Override
 		public Version since() {
-			return CHVersion.V3_3_2;
+			return MSVersion.V3_3_2;
 		}
 
 		@Override
-		public boolean matches(Map<String, Construct> prefilter, BindableEvent e) throws PrefilterNonMatchException {
+		public boolean matches(Map<String, Mixed> prefilter, BindableEvent e) throws PrefilterNonMatchException {
 			if(!(e instanceof MCPlayerJumpEvent)) {
 				return false;
 			}
@@ -158,9 +158,9 @@ public class Events {
 		}
 
 		@Override
-	public Map<String, Construct> evaluate(BindableEvent e) throws EventException {
+	public Map<String, Mixed> evaluate(BindableEvent e) throws EventException {
 			MCPlayerJumpEvent event = (MCPlayerJumpEvent) e;
-			Map<String, Construct> map = new HashMap<>();
+			Map<String, Mixed> map = new HashMap<>();
 			Target t = Target.UNKNOWN;
 
 			map.put("player", new CString(event.getPlayer().getName(), t));
@@ -170,7 +170,7 @@ public class Events {
 		}
 
 		@Override
-		public boolean modifyEvent(String key, Construct value, BindableEvent e) {
+		public boolean modifyEvent(String key, Mixed value, BindableEvent e) {
 			MCPlayerJumpEvent event = (MCPlayerJumpEvent)e;
 			if(key.equals("from")){
 				Target t = value.getTarget();

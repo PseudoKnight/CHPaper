@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.pseudoknight</groupId>
     <artifactId>chpaper</artifactId>
-    <version>0.2.1</version>
+    <version>0.2.2</version>
     <name>CHPaper</name>
     <description>Gives access to methods available in PaperSpigot but not Bukkit or Spigot</description>
     
@@ -19,8 +19,8 @@
                 <version>2.3.2</version>
                 <configuration>
                     <showDeprecation>true</showDeprecation>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArgument>-XDignore.symbol.file</compilerArgument>
                 </configuration>
             </plugin>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>commandhelper</artifactId>
-            <version>3.3.3-SNAPSHOT</version>
+            <version>3.3.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

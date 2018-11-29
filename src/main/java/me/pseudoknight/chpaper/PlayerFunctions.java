@@ -3,12 +3,11 @@ package me.pseudoknight.chpaper;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCPlayer;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.CHVersion;
+import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.CBoolean;
 import com.laytonsmith.core.constructs.CInt;
 import com.laytonsmith.core.constructs.CVoid;
-import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.environments.CommandHelperEnvironment;
 import com.laytonsmith.core.environments.Environment;
@@ -17,6 +16,7 @@ import com.laytonsmith.core.exceptions.CRE.CREPlayerOfflineException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
+import com.laytonsmith.core.natives.interfaces.Mixed;
 import org.bukkit.entity.Player;
 
 public class PlayerFunctions {
@@ -39,7 +39,7 @@ public class PlayerFunctions {
 			return "void {[player], distance} Sets view distance for player in chunks.";
 		}
 
-		public Construct exec(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
 			MCPlayer p;
 			int distance;
 			if(args.length == 1) {
@@ -67,7 +67,7 @@ public class PlayerFunctions {
 		}
 
 		public Version since() {
-			return CHVersion.V3_3_2;
+			return MSVersion.V3_3_2;
 		}
 
 	}
@@ -87,7 +87,7 @@ public class PlayerFunctions {
 			return "void {[player]} Gets view distance for player in chunks.";
 		}
 
-		public Construct exec(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
 			MCPlayer p;
 			if(args.length == 0) {
 				p = environment.getEnv(CommandHelperEnvironment.class).GetPlayer();
@@ -111,7 +111,7 @@ public class PlayerFunctions {
 		}
 
 		public Version since() {
-			return CHVersion.V3_3_2;
+			return MSVersion.V3_3_2;
 		}
 
 	}
@@ -131,7 +131,7 @@ public class PlayerFunctions {
 			return "boolean {[player]} Gets whether or not this player affects mob spawning.";
 		}
 
-		public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
+		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			MCPlayer p;
 			if(args.length == 1) {
 				p = Static.GetPlayer(args[0].val(), t);
@@ -155,7 +155,7 @@ public class PlayerFunctions {
 		}
 
 		public Version since() {
-			return CHVersion.V3_3_2;
+			return MSVersion.V3_3_2;
 		}
 
 	}
@@ -175,7 +175,7 @@ public class PlayerFunctions {
 			return "void {[player], boolean} Sets whether or not this player affects mob spawning.";
 		}
 
-		public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
+		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			MCPlayer p;
 			boolean doesAffect;
 			if(args.length == 2) {
@@ -203,7 +203,7 @@ public class PlayerFunctions {
 		}
 
 		public Version since() {
-			return CHVersion.V3_3_2;
+			return MSVersion.V3_3_2;
 		}
 
 	}
