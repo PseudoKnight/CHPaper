@@ -28,6 +28,9 @@ Gets the entity spawn settings for this world.
 #### void set_spawning(world, settingsArray)
 Sets the entity spawn settings for this world.
 
+#### UUID get_firework_shooter(fireworkUUID)
+Gets the entity that spawned this firework, or null if none exists.
+
 ### Mob Management
 
 #### void set_mob_killer(entityID, player)
