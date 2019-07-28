@@ -1,8 +1,11 @@
 package me.pseudoknight.chpaper;
 
 import com.laytonsmith.PureUtilities.Version;
+import com.laytonsmith.abstraction.MCEntity;
 import com.laytonsmith.abstraction.MCLivingEntity;
+import com.laytonsmith.abstraction.events.MCProjectileLaunchEvent;
 import com.laytonsmith.annotations.api;
+import com.laytonsmith.core.ArgumentValidation;
 import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.ObjectGenerator;
 import com.laytonsmith.core.Static;
@@ -12,14 +15,17 @@ import com.laytonsmith.core.constructs.CDouble;
 import com.laytonsmith.core.constructs.CInt;
 import com.laytonsmith.core.constructs.CString;
 import com.laytonsmith.core.constructs.Target;
+import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.events.AbstractEvent;
 import com.laytonsmith.core.events.BindableEvent;
+import com.laytonsmith.core.events.BoundEvent;
 import com.laytonsmith.core.events.Driver;
 import com.laytonsmith.core.exceptions.CRE.CRECastException;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
 import com.laytonsmith.core.natives.interfaces.Mixed;
 import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
+import me.pseudoknight.chpaper.abstraction.MCPlayerElytraBoostEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
 
 import java.util.HashMap;
@@ -158,7 +164,7 @@ public class Events {
 		}
 
 		@Override
-	public Map<String, Mixed> evaluate(BindableEvent e) throws EventException {
+		public Map<String, Mixed> evaluate(BindableEvent e) throws EventException {
 			MCPlayerJumpEvent event = (MCPlayerJumpEvent) e;
 			Map<String, Mixed> map = new HashMap<>();
 			Target t = Target.UNKNOWN;
@@ -178,6 +184,93 @@ public class Events {
 				return true;
 			}
 			return false;
+		}
+	}
+
+	@api
+	public static class player_elytra_boost extends AbstractEvent {
+
+		@Override
+		public String getName() {
+			return "player_elytra_boost";
+		}
+
+		@Override
+		public String docs() {
+			return "{player: <string match> The player boosting.} "
+					+ "This event is called when a player boosts using a firework while gliding."
+					+ "{player | consume: Whether or not the firework item will be consumed."
+					+ " | firework: The entity id of the firework created. | item: The item array of the firework used.}"
+					+ "{consume} "
+					+ "{}";
+		}
+
+		@Override
+		public boolean matches(Map<String, Mixed> prefilter, BindableEvent e) throws PrefilterNonMatchException {
+			if(!(e instanceof MCPlayerElytraBoostEvent)) {
+				return false;
+			}
+			MCPlayerElytraBoostEvent event = (MCPlayerElytraBoostEvent) e;
+			if(prefilter.containsKey("player")
+					&& !event.getPlayer().getName().equals(prefilter.get("player").val())) {
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		public Map<String, Mixed> evaluate(BindableEvent e) throws EventException {
+			MCPlayerElytraBoostEvent event = (MCPlayerElytraBoostEvent) e;
+			Map<String, Mixed> map = new HashMap<>();
+			Target t = Target.UNKNOWN;
+
+			map.put("player", new CString(event.getPlayer().getName(), t));
+			map.put("consume", CBoolean.get(event.willConsumeItem()));
+			map.put("firework", new CString(event.getFirework().getUniqueId().toString(), t));
+			map.put("item", ObjectGenerator.GetGenerator().item(event.getItemStack(), t));
+			return map;
+		}
+
+		@Override
+		public boolean modifyEvent(String key, Mixed value, BindableEvent e) {
+			MCPlayerElytraBoostEvent event = (MCPlayerElytraBoostEvent)e;
+			if(key.equals("consume")){
+				Target t = value.getTarget();
+				event.setConsumeItem(ArgumentValidation.getBooleanObject(value, t));
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public void preExecution(Environment env, BoundEvent.ActiveEvent activeEvent) {
+			if(activeEvent.getUnderlyingEvent() instanceof MCPlayerElytraBoostEvent) {
+				MCEntity entity = ((MCPlayerElytraBoostEvent) activeEvent.getUnderlyingEvent()).getFirework();
+				Static.InjectEntity(entity);
+			}
+		}
+
+		@Override
+		public void postExecution(Environment env, BoundEvent.ActiveEvent activeEvent) {
+			if(activeEvent.getUnderlyingEvent() instanceof MCPlayerElytraBoostEvent) {
+				MCEntity entity = ((MCPlayerElytraBoostEvent) activeEvent.getUnderlyingEvent()).getFirework();
+				Static.UninjectEntity(entity);
+			}
+		}
+
+		@Override
+		public Driver driver() {
+			return Driver.EXTENSION;
+		}
+
+		@Override
+		public BindableEvent convert(CArray manualObject, Target t) {
+			return null;
+		}
+
+		@Override
+		public Version since() {
+			return MSVersion.V3_3_4;
 		}
 	}
 }

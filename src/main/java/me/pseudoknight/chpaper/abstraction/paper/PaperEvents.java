@@ -1,19 +1,21 @@
 package me.pseudoknight.chpaper.abstraction.paper;
 
 import com.destroystokyo.paper.event.block.BeaconEffectEvent;
+import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
-import com.laytonsmith.abstraction.Implementation;
-import com.laytonsmith.abstraction.MCLivingEntity;
-import com.laytonsmith.abstraction.MCLocation;
-import com.laytonsmith.abstraction.MCPlayer;
+import com.laytonsmith.abstraction.*;
 import com.laytonsmith.abstraction.blocks.MCBlock;
+import com.laytonsmith.abstraction.bukkit.BukkitMCItemStack;
 import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
 import com.laytonsmith.abstraction.bukkit.blocks.BukkitMCBlock;
+import com.laytonsmith.abstraction.bukkit.entities.BukkitMCFirework;
 import com.laytonsmith.abstraction.bukkit.entities.BukkitMCPlayer;
 import com.laytonsmith.abstraction.bukkit.events.BukkitPlayerEvents.BukkitMCPlayerEvent;
+import com.laytonsmith.abstraction.entities.MCFirework;
 import com.laytonsmith.abstraction.enums.bukkit.BukkitMCPotionEffectType;
 import com.laytonsmith.annotations.abstraction;
 import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
+import me.pseudoknight.chpaper.abstraction.MCPlayerElytraBoostEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
@@ -92,6 +94,41 @@ public class PaperEvents {
 			return e;
 		}
 
+	}
+
+	@abstraction(type = Implementation.Type.BUKKIT)
+	public static class PaperPlayerElytraBoostEvent extends BukkitMCPlayerEvent implements MCPlayerElytraBoostEvent {
+		PlayerElytraBoostEvent e;
+
+		public PaperPlayerElytraBoostEvent(PlayerElytraBoostEvent e) {
+			super(e);
+			this.e = e;
+		}
+
+		@Override
+		public Object _GetObject() {
+			return e;
+		}
+
+		@Override
+		public MCFirework getFirework() {
+			return new BukkitMCFirework(e.getFirework());
+		}
+
+		@Override
+		public MCItemStack getItemStack() {
+			return new BukkitMCItemStack(e.getItemStack());
+		}
+
+		@Override
+		public boolean willConsumeItem() {
+			return e.shouldConsume();
+		}
+
+		@Override
+		public void setConsumeItem(boolean consume) {
+			e.setShouldConsume(consume);
+		}
 	}
 
 }

@@ -68,3 +68,22 @@ This event is called when a player jumps.
 
 * **from**
 
+### player_elytra_boost
+
+This event is called when a player boosts using a firework while gliding.
+
+#### Prefilters
+
+* **player:** <string match>
+
+#### Event Data
+
+* **player:** The player boosting.
+* **firework:** The entity id of the firework created.
+* **item:** The item array of the firework used.
+* **consume:** Whether or not the firework item will be consumed.
+
+#### Mutable Fields
+
+* **consume**
+

@@ -1,23 +1,27 @@
 package me.pseudoknight.chpaper;
 
 import com.laytonsmith.PureUtilities.Version;
+import com.laytonsmith.abstraction.MCEntity;
 import com.laytonsmith.abstraction.MCPlayer;
+import com.laytonsmith.abstraction.entities.MCFirework;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.Static;
-import com.laytonsmith.core.constructs.CBoolean;
-import com.laytonsmith.core.constructs.CInt;
-import com.laytonsmith.core.constructs.CVoid;
-import com.laytonsmith.core.constructs.Target;
+import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.environments.CommandHelperEnvironment;
 import com.laytonsmith.core.environments.Environment;
+import com.laytonsmith.core.exceptions.CRE.CREBadEntityException;
 import com.laytonsmith.core.exceptions.CRE.CRELengthException;
 import com.laytonsmith.core.exceptions.CRE.CREPlayerOfflineException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.natives.interfaces.Mixed;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class PlayerFunctions {
 	public static String docs() {
@@ -204,6 +208,50 @@ public class PlayerFunctions {
 
 		public Version since() {
 			return MSVersion.V3_3_2;
+		}
+
+	}
+	@api
+	public static class get_firework_shooter extends AbstractFunction {
+
+		public String getName() {
+			return "get_firework_shooter";
+		}
+
+		public Integer[] numArgs() {
+			return new Integer[]{1};
+		}
+
+		public String docs() {
+			return "UUID {UUID} Gets the entity that spawned this firework, or null if none exists.";
+		}
+
+		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
+			Entity e = (Entity) Static.getEntity(args[0], t).getHandle();
+			if(!(e instanceof Firework)) {
+				throw new CREBadEntityException("Entity is not a firework.", t);
+			}
+			UUID spawner = ((Firework) e).getSpawningEntity();
+			if(spawner == null) {
+				return CNull.NULL;
+			}
+			return new CString(spawner.toString(), t);
+		}
+
+		public Class<? extends CREThrowable>[] thrown() {
+			return new Class[]{CREBadEntityException.class};
+		}
+
+		public boolean isRestricted() {
+			return true;
+		}
+
+		public Boolean runAsync() {
+			return false;
+		}
+
+		public Version since() {
+			return MSVersion.V3_3_4;
 		}
 
 	}
