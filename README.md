@@ -36,6 +36,12 @@ Gets the entity that spawned this firework, or null if none exists.
 #### void set_mob_killer(entityID, player)
 Sets the killer of a mob/player to the specified player.
 
+#### boolean set_mob_destination(entityID, destination)
+Finds and sets a path for a mob to a location or living entity.
+
+#### array get_mob_path(entityID)
+Returns an array of location arrays along the mob's current path or null.
+
 ## Event Documentation
 
 ### beacon_effect

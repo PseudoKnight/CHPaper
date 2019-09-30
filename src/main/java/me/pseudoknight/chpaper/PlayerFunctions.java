@@ -1,10 +1,9 @@
 package me.pseudoknight.chpaper;
 
 import com.laytonsmith.PureUtilities.Version;
-import com.laytonsmith.abstraction.MCEntity;
 import com.laytonsmith.abstraction.MCPlayer;
-import com.laytonsmith.abstraction.entities.MCFirework;
 import com.laytonsmith.annotations.api;
+import com.laytonsmith.core.ArgumentValidation;
 import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.*;
@@ -184,11 +183,11 @@ public class PlayerFunctions {
 			boolean doesAffect;
 			if(args.length == 2) {
 				p = Static.GetPlayer(args[0].val(), t);
-				doesAffect = Static.getBoolean(args[1], t);
+				doesAffect = ArgumentValidation.getBooleanObject(args[1], t);
 			} else {
 				p = env.getEnv(CommandHelperEnvironment.class).GetPlayer();
 				Static.AssertPlayerNonNull(p, t);
-				doesAffect = Static.getBoolean(args[0], t);
+				doesAffect = ArgumentValidation.getBooleanObject(args[0], t);
 			}
 			((Player) p.getHandle()).setAffectsSpawning(doesAffect);
 			return CVoid.VOID;
