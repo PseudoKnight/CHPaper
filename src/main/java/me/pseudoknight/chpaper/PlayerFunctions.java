@@ -48,10 +48,10 @@ public class PlayerFunctions {
 			if(args.length == 1) {
 				p = environment.getEnv(CommandHelperEnvironment.class).GetPlayer();
 				Static.AssertPlayerNonNull(p, t);
-				distance = Static.getInt32(args[0], t);
+				distance = ArgumentValidation.getInt32(args[0], t);
 			} else {
 				p = Static.GetPlayer(args[0], t);
-				distance = Static.getInt32(args[1], t);
+				distance = ArgumentValidation.getInt32(args[1], t);
 			}
 			((Player) p.getHandle()).setViewDistance(distance);
 			return CVoid.VOID;

@@ -113,23 +113,23 @@ public class Functions {
 				w.setSpawnFlags(monsterspawns, animalspawns);
 
 				if(values.containsKey("ambient-spawn-limit")) {
-					w.setAmbientSpawnLimit(Static.getInt32(values.get("ambient-spawn-limit", t), t));
+					w.setAmbientSpawnLimit(ArgumentValidation.getInt32(values.get("ambient-spawn-limit", t), t));
 				}
 				if(values.containsKey("wateranimal-spawn-limit")) {
-					w.setWaterAnimalSpawnLimit(Static.getInt32(values.get("wateranimal-spawn-limit", t), t));
+					w.setWaterAnimalSpawnLimit(ArgumentValidation.getInt32(values.get("wateranimal-spawn-limit", t), t));
 				}
 				if(values.containsKey("animal-spawn-limit")) {
-					w.setAnimalSpawnLimit(Static.getInt32(values.get("animal-spawn-limit", t), t));
+					w.setAnimalSpawnLimit(ArgumentValidation.getInt32(values.get("animal-spawn-limit", t), t));
 				}
 				if(values.containsKey("monster-spawn-limit")) {
-					w.setMonsterSpawnLimit(Static.getInt32(values.get("monster-spawn-limit", t), t));
+					w.setMonsterSpawnLimit(ArgumentValidation.getInt32(values.get("monster-spawn-limit", t), t));
 				}
 
 				if(values.containsKey("ticks-per-animal-spawns")) {
-					w.setTicksPerAnimalSpawns(Static.getInt32(values.get("ticks-per-animal-spawns", t), t));
+					w.setTicksPerAnimalSpawns(ArgumentValidation.getInt32(values.get("ticks-per-animal-spawns", t), t));
 				}
 				if(values.containsKey("ticks-per-monster-spawns")) {
-					w.setTicksPerMonsterSpawns(Static.getInt32(values.get("ticks-per-monster-spawns", t), t));
+					w.setTicksPerMonsterSpawns(ArgumentValidation.getInt32(values.get("ticks-per-monster-spawns", t), t));
 				}
 			} else {
 				throw new CREFormatException("Expected an array for parameter 2.", t);
@@ -225,7 +225,7 @@ public class Functions {
 			}
 			double speedMultiplier = 1.0;
 			if(args.length == 3) {
-				speedMultiplier = Static.getDouble32(args[2], t);
+				speedMultiplier = ArgumentValidation.getDouble(args[2], t);
 			}
 			if(args[1].isInstanceOf(CArray.TYPE)) {
 				MCLocation destination = ObjectGenerator.GetGenerator().location(args[1], null, t);
