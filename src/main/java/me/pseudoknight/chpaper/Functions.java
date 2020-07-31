@@ -61,6 +61,17 @@ public class Functions {
 			values.set("monster-spawn-limit", new CInt(w.getMonsterSpawnLimit(), t), t);
 			values.set("ticks-per-animal-spawns", new CInt(w.getTicksPerAnimalSpawns(), t), t);
 			values.set("ticks-per-monster-spawns", new CInt(w.getTicksPerMonsterSpawns(), t), t);
+			try {
+				// 1.15.2
+				values.set("ticks-per-ambient-spawns", new CInt(w.getTicksPerAmbientSpawns(), t), t);
+				values.set("ticks-per-water-spawns", new CInt(w.getTicksPerWaterSpawns(), t), t);
+
+				// 1.16.1
+				values.set("water-ambient-spawn-limit", new CInt(w.getWaterAmbientSpawnLimit(), t), t);
+				values.set("ticks-per-water-ambient-spawns", new CInt(w.getTicksPerWaterAmbientSpawns(), t), t);
+			} catch(NoSuchMethodError ex) {
+				// earlier server version
+			}
 			return(values);
 		}
 
@@ -131,6 +142,27 @@ public class Functions {
 				if(values.containsKey("ticks-per-monster-spawns")) {
 					w.setTicksPerMonsterSpawns(ArgumentValidation.getInt32(values.get("ticks-per-monster-spawns", t), t));
 				}
+
+				try {
+					// 1.15.2
+					if(values.containsKey("ticks-per-ambient-spawns")) {
+						w.setTicksPerAmbientSpawns(ArgumentValidation.getInt32(values.get("ticks-per-ambient-spawns", t), t));
+					}
+					if(values.containsKey("ticks-per-water-spawns")) {
+						w.setTicksPerWaterSpawns(ArgumentValidation.getInt32(values.get("ticks-per-water-spawns", t), t));
+					}
+
+					// 1.16.1
+					if(values.containsKey("ticks-per-water-ambient-spawns")) {
+						w.setTicksPerWaterAmbientSpawns(ArgumentValidation.getInt32(values.get("ticks-per-water-ambient-spawns", t), t));
+					}
+					if(values.containsKey("water-ambient-spawn-limit")) {
+						w.setWaterAmbientSpawnLimit(ArgumentValidation.getInt32(values.get("water-ambient-spawn-limit", t), t));
+					}
+				} catch (NoSuchMethodError ex) {
+					// earlier server version
+				}
+
 			} else {
 				throw new CREFormatException("Expected an array for parameter 2.", t);
 			}
