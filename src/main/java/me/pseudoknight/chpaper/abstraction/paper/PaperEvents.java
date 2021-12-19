@@ -1,10 +1,12 @@
 package me.pseudoknight.chpaper.abstraction.paper;
 
 import com.destroystokyo.paper.event.block.BeaconEffectEvent;
+import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import com.laytonsmith.abstraction.*;
 import com.laytonsmith.abstraction.blocks.MCBlock;
+import com.laytonsmith.abstraction.bukkit.BukkitConvertor;
 import com.laytonsmith.abstraction.bukkit.BukkitMCItemStack;
 import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
 import com.laytonsmith.abstraction.bukkit.blocks.BukkitMCBlock;
@@ -12,11 +14,15 @@ import com.laytonsmith.abstraction.bukkit.entities.BukkitMCFirework;
 import com.laytonsmith.abstraction.bukkit.entities.BukkitMCPlayer;
 import com.laytonsmith.abstraction.bukkit.events.BukkitPlayerEvents.BukkitMCPlayerEvent;
 import com.laytonsmith.abstraction.entities.MCFirework;
+import com.laytonsmith.abstraction.enums.MCEntityType;
+import com.laytonsmith.abstraction.enums.bukkit.BukkitMCEntityType;
 import com.laytonsmith.abstraction.enums.bukkit.BukkitMCPotionEffectType;
 import com.laytonsmith.annotations.abstraction;
 import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
+import me.pseudoknight.chpaper.abstraction.MCEntityRemoveFromWorldEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerElytraBoostEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -128,6 +134,30 @@ public class PaperEvents {
 		@Override
 		public void setConsumeItem(boolean consume) {
 			e.setShouldConsume(consume);
+		}
+	}
+
+	@abstraction(type = Implementation.Type.BUKKIT)
+	public static class PaperEntityRemoveFromWorldEvent implements MCEntityRemoveFromWorldEvent {
+		EntityRemoveFromWorldEvent e;
+
+		public PaperEntityRemoveFromWorldEvent(Event e) {
+			this.e = (EntityRemoveFromWorldEvent) e;
+		}
+
+		@Override
+		public MCEntity getEntity() {
+			return BukkitConvertor.BukkitGetCorrectEntity(e.getEntity());
+		}
+
+		@Override
+		public MCEntityType<EntityType> getEntityType() {
+			return BukkitMCEntityType.valueOfConcrete(e.getEntityType());
+		}
+
+		@Override
+		public Object _GetObject() {
+			return e;
 		}
 	}
 

@@ -1,6 +1,7 @@
 package me.pseudoknight.chpaper.abstraction.paper;
 
 import com.destroystokyo.paper.event.block.BeaconEffectEvent;
+import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import com.laytonsmith.commandhelper.CommandHelperPlugin;
@@ -25,6 +26,7 @@ public class PaperListeners implements Listener {
 		BeaconEffectEvent.getHandlerList().unregister(listener);
 		PlayerJumpEvent.getHandlerList().unregister(listener);
 		PlayerElytraBoostEvent.getHandlerList().unregister(listener);
+		EntityRemoveFromWorldEvent.getHandlerList().unregister(listener);
 	}
 
 	@EventHandler(priority= EventPriority.LOWEST)
@@ -43,5 +45,11 @@ public class PaperListeners implements Listener {
 	public void onPlayerBoosts(PlayerElytraBoostEvent event) {
 		PaperEvents.PaperPlayerElytraBoostEvent peb = new PaperEvents.PaperPlayerElytraBoostEvent(event);
 		EventUtils.TriggerListener(Driver.EXTENSION, "player_elytra_boost", peb);
+	}
+
+	@EventHandler(priority= EventPriority.LOWEST)
+	public void onEntityRemoveFromWorld(EntityRemoveFromWorldEvent event) {
+		PaperEvents.PaperEntityRemoveFromWorldEvent peb = new PaperEvents.PaperEntityRemoveFromWorldEvent(event);
+		EventUtils.TriggerListener(Driver.EXTENSION, "entity_remove_from_world", peb);
 	}
 }
