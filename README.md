@@ -96,3 +96,17 @@ This event is called when a player boosts using a firework while gliding.
 
 * **consume**
 
+### entity_remove_from_world
+
+Fired any time an entity is being removed from a world for any reason
+
+#### Prefilters
+
+* **id**: <Macro>
+* **type**: <Macro>
+
+#### Event Data
+
+* **id:** The entityID
+* **type:** The type of entity removing.
+

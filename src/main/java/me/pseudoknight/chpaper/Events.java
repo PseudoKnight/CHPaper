@@ -3,7 +3,6 @@ package me.pseudoknight.chpaper;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCEntity;
 import com.laytonsmith.abstraction.MCLivingEntity;
-import com.laytonsmith.abstraction.events.MCProjectileLaunchEvent;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.ArgumentValidation;
 import com.laytonsmith.core.MSVersion;
@@ -20,11 +19,14 @@ import com.laytonsmith.core.events.AbstractEvent;
 import com.laytonsmith.core.events.BindableEvent;
 import com.laytonsmith.core.events.BoundEvent;
 import com.laytonsmith.core.events.Driver;
+import com.laytonsmith.core.events.Prefilters;
+import com.laytonsmith.core.events.Prefilters.PrefilterType;
 import com.laytonsmith.core.exceptions.CRE.CRECastException;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
 import com.laytonsmith.core.natives.interfaces.Mixed;
 import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
+import me.pseudoknight.chpaper.abstraction.MCEntityRemoveFromWorldEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerElytraBoostEvent;
 import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
 
@@ -256,6 +258,67 @@ public class Events {
 				MCEntity entity = ((MCPlayerElytraBoostEvent) activeEvent.getUnderlyingEvent()).getFirework();
 				Static.UninjectEntity(entity);
 			}
+		}
+
+		@Override
+		public Driver driver() {
+			return Driver.EXTENSION;
+		}
+
+		@Override
+		public BindableEvent convert(CArray manualObject, Target t) {
+			return null;
+		}
+
+		@Override
+		public Version since() {
+			return MSVersion.V3_3_4;
+		}
+	}
+
+	@api
+	public static class entity_remove_from_world extends AbstractEvent {
+
+		@Override
+		public String getName() {
+			return "entity_remove_from_world";
+		}
+
+		@Override
+		public String docs() {
+			return "{id: <macro> The entityID | type: <macro> The type of entity removing.}"
+					+ " Fired any time an entity is being removed from a world for any reason"
+					+ " {type | id: The entityID} "
+					+ "{} "
+					+ "{}";
+		}
+
+		@Override
+		public boolean matches(Map<String, Mixed> prefilter, BindableEvent e) throws PrefilterNonMatchException {
+			if(!(e instanceof MCEntityRemoveFromWorldEvent)) {
+				return false;
+			}
+			MCEntityRemoveFromWorldEvent event = (MCEntityRemoveFromWorldEvent) e;
+
+			Prefilters.match(prefilter, "type", event.getEntityType().name(), PrefilterType.MACRO);
+			Prefilters.match(prefilter, "id", event.getEntity().getUniqueId().toString(), PrefilterType.MACRO);
+
+			return true;
+		}
+
+		@Override
+		public Map<String, Mixed> evaluate(BindableEvent e) throws EventException {
+			MCEntityRemoveFromWorldEvent event = (MCEntityRemoveFromWorldEvent) e;
+			Map<String, Mixed> map = new HashMap<>();
+			Target t = Target.UNKNOWN;
+			map.put("type", new CString(event.getEntityType().name(), t));
+			map.put("id", new CString(event.getEntity().getUniqueId().toString(), t));
+			return map;
+		}
+
+		@Override
+		public boolean modifyEvent(String key, Mixed value, BindableEvent e) {
+			return false;
 		}
 
 		@Override
