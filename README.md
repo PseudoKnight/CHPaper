@@ -65,7 +65,7 @@ This event is called when a player jumps.
 
 #### Prefilters
 
-* **player:** <string match>
+* **player:** String
 
 #### Event Data
 
@@ -83,7 +83,7 @@ This event is called when a player boosts using a firework while gliding.
 
 #### Prefilters
 
-* **player:** <string match>
+* **player:** String
 
 #### Event Data
 
@@ -102,8 +102,8 @@ Fired any time an entity is being removed from a world for any reason
 
 #### Prefilters
 
-* **id**: <Macro>
-* **type**: <Macro>
+* **id**: String
+* **type**: Macro
 
 #### Event Data
 

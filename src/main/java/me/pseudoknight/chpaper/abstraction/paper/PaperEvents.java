@@ -27,6 +27,8 @@ import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class PaperEvents {
 
 	@abstraction(type = Implementation.Type.BUKKIT)
@@ -146,13 +148,13 @@ public class PaperEvents {
 		}
 
 		@Override
-		public MCEntity getEntity() {
-			return BukkitConvertor.BukkitGetCorrectEntity(e.getEntity());
+		public UUID getEntityUniqueId() {
+			return e.getEntity().getUniqueId();
 		}
 
 		@Override
-		public MCEntityType<EntityType> getEntityType() {
-			return BukkitMCEntityType.valueOfConcrete(e.getEntityType());
+		public String getEntityTypeName() {
+			return e.getEntityType().name();
 		}
 
 		@Override

@@ -286,7 +286,7 @@ public class Events {
 
 		@Override
 		public String docs() {
-			return "{id: <macro> The entityID | type: <macro> The type of entity removing.}"
+			return "{id: <string> The entityID | type: <macro> The type of entity removing.}"
 					+ " Fired any time an entity is being removed from a world for any reason"
 					+ " {type | id: The entityID} "
 					+ "{} "
@@ -300,8 +300,13 @@ public class Events {
 			}
 			MCEntityRemoveFromWorldEvent event = (MCEntityRemoveFromWorldEvent) e;
 
-			Prefilters.match(prefilter, "type", event.getEntityType().name(), PrefilterType.MACRO);
-			Prefilters.match(prefilter, "id", event.getEntity().getUniqueId().toString(), PrefilterType.MACRO);
+			if(prefilter.containsKey("id")) {
+				String id = prefilter.get("id").val();
+				if(!id.equals(event.getEntityUniqueId().toString())) {
+					return false;
+				}
+			}
+			Prefilters.match(prefilter, "type", event.getEntityTypeName(), PrefilterType.MACRO);
 
 			return true;
 		}
@@ -311,8 +316,8 @@ public class Events {
 			MCEntityRemoveFromWorldEvent event = (MCEntityRemoveFromWorldEvent) e;
 			Map<String, Mixed> map = new HashMap<>();
 			Target t = Target.UNKNOWN;
-			map.put("type", new CString(event.getEntityType().name(), t));
-			map.put("id", new CString(event.getEntity().getUniqueId().toString(), t));
+			map.put("type", new CString(event.getEntityTypeName(), t));
+			map.put("id", new CString(event.getEntityUniqueId().toString(), t));
 			return map;
 		}
 
