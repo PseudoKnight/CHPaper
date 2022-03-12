@@ -153,8 +153,8 @@ public class PaperEvents {
 		}
 
 		@Override
-		public String getEntityTypeName() {
-			return e.getEntityType().name();
+		public MCEntityType<EntityType> getEntityType() {
+			return BukkitMCEntityType.valueOfConcrete(e.getEntityType());
 		}
 
 		@Override

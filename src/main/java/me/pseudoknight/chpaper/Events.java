@@ -306,7 +306,7 @@ public class Events {
 					return false;
 				}
 			}
-			Prefilters.match(prefilter, "type", event.getEntityTypeName(), PrefilterType.MACRO);
+			Prefilters.match(prefilter, "type", event.getEntityType().name(), PrefilterType.MACRO);
 
 			return true;
 		}
@@ -316,7 +316,7 @@ public class Events {
 			MCEntityRemoveFromWorldEvent event = (MCEntityRemoveFromWorldEvent) e;
 			Map<String, Mixed> map = new HashMap<>();
 			Target t = Target.UNKNOWN;
-			map.put("type", new CString(event.getEntityTypeName(), t));
+			map.put("type", new CString(event.getEntityType().name(), t));
 			map.put("id", new CString(event.getEntityUniqueId().toString(), t));
 			return map;
 		}
