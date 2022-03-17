@@ -110,3 +110,21 @@ Fired any time an entity is being removed from a world for any reason
 * **id:** The entityID
 * **type:** The type of entity removing.
 
+### player_armor_change
+
+This event is called when a player's armor slot changes by any cause, including function.
+
+#### Prefilters
+
+* **player:** String
+
+#### Event Data
+
+* **player:** The player whose armor slot changed.
+* **olditem:** The item array for the old item (or null)
+* **newitem:** The item array for the new item (or null)
+* **slottype:** The armor slot changed (HEAD, CHEST, LEGS, FEET)
+
+#### Mutable Fields
+
+* **from**

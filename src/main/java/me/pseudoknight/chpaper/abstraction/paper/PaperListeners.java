@@ -2,6 +2,7 @@ package me.pseudoknight.chpaper.abstraction.paper;
 
 import com.destroystokyo.paper.event.block.BeaconEffectEvent;
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import com.laytonsmith.commandhelper.CommandHelperPlugin;
@@ -39,6 +40,12 @@ public class PaperListeners implements Listener {
 	public void onPlayerJump(PlayerJumpEvent event) {
 		PaperEvents.PaperPlayerJumpEvent pj = new PaperEvents.PaperPlayerJumpEvent(event);
 		EventUtils.TriggerListener(Driver.EXTENSION, "player_jump", pj);
+	}
+
+	@EventHandler(priority= EventPriority.LOWEST)
+	public void onPlayerArmorChange(PlayerArmorChangeEvent event) {
+		PaperEvents.PaperPlayerArmorChangeEvent ac = new PaperEvents.PaperPlayerArmorChangeEvent(event);
+		EventUtils.TriggerListener(Driver.EXTENSION, "player_armor_change", ac);
 	}
 
 	@EventHandler(priority= EventPriority.LOWEST)

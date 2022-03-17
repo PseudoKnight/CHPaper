@@ -2,6 +2,7 @@ package me.pseudoknight.chpaper.abstraction.paper;
 
 import com.destroystokyo.paper.event.block.BeaconEffectEvent;
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import com.laytonsmith.abstraction.*;
@@ -18,12 +19,10 @@ import com.laytonsmith.abstraction.enums.MCEntityType;
 import com.laytonsmith.abstraction.enums.bukkit.BukkitMCEntityType;
 import com.laytonsmith.abstraction.enums.bukkit.BukkitMCPotionEffectType;
 import com.laytonsmith.annotations.abstraction;
-import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
-import me.pseudoknight.chpaper.abstraction.MCEntityRemoveFromWorldEvent;
-import me.pseudoknight.chpaper.abstraction.MCPlayerElytraBoostEvent;
-import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
+import me.pseudoknight.chpaper.abstraction.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -102,6 +101,44 @@ public class PaperEvents {
 			return e;
 		}
 
+	}
+
+	@abstraction(type = Implementation.Type.BUKKIT)
+	public static class PaperPlayerArmorChangeEvent extends BukkitMCPlayerEvent implements MCPlayerArmorChangeEvent {
+		PlayerArmorChangeEvent e;
+
+		public PaperPlayerArmorChangeEvent(PlayerArmorChangeEvent e) {
+			super(e);
+			this.e = e;
+		}
+
+		@Override
+		public Object _GetObject() {
+			return e;
+		}
+
+		@Override
+		public MCItemStack getNewItem() {
+			ItemStack stack = e.getNewItem();
+			if(stack == null) {
+				return null;
+			}
+			return new BukkitMCItemStack(e.getNewItem());
+		}
+
+		@Override
+		public MCItemStack getOldItem() {
+			ItemStack stack = e.getOldItem();
+			if(stack == null) {
+				return null;
+			}
+			return new BukkitMCItemStack(e.getOldItem());
+		}
+
+		@Override
+		public String getSlotType() {
+			return e.getSlotType().name();
+		}
 	}
 
 	@abstraction(type = Implementation.Type.BUKKIT)

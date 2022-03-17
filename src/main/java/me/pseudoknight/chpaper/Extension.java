@@ -15,7 +15,7 @@ import java.util.logging.Level;
 public class Extension extends AbstractExtension {
 
 	public Version getVersion() {
-		return new SimpleVersion(0,3,2);
+		return new SimpleVersion(0,3,3);
 	}
 
 	@Override

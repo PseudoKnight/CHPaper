@@ -25,10 +25,7 @@ import com.laytonsmith.core.exceptions.CRE.CRECastException;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
 import com.laytonsmith.core.natives.interfaces.Mixed;
-import me.pseudoknight.chpaper.abstraction.MCBeaconEffectEvent;
-import me.pseudoknight.chpaper.abstraction.MCEntityRemoveFromWorldEvent;
-import me.pseudoknight.chpaper.abstraction.MCPlayerElytraBoostEvent;
-import me.pseudoknight.chpaper.abstraction.MCPlayerJumpEvent;
+import me.pseudoknight.chpaper.abstraction.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -185,6 +182,72 @@ public class Events {
 				event.setFrom(ObjectGenerator.GetGenerator().location(value, null, t));
 				return true;
 			}
+			return false;
+		}
+	}
+
+	@api
+	public static class player_armor_change extends AbstractEvent {
+
+		@Override
+		public String getName() {
+			return "player_armor_change";
+		}
+
+		@Override
+		public String docs() {
+			return "{player: <string match> The player whose armor slot changed.} "
+					+ "This event is called when a player's armor slot changes by any cause, including function."
+					+ "{player | olditem: The item array for the old item (or null)"
+					+ " | newitem: The item array for the new item (or null)"
+					+ " | slottype: The armor slot changed (HEAD, CHEST, LEGS, FEET)} "
+					+ "{} "
+					+ "{}";
+		}
+
+		@Override
+		public Driver driver() {
+			return Driver.EXTENSION;
+		}
+
+		@Override
+		public BindableEvent convert(CArray manualObject, Target t) {
+			return null;
+		}
+
+		@Override
+		public Version since() {
+			return MSVersion.V3_3_4;
+		}
+
+		@Override
+		public boolean matches(Map<String, Mixed> prefilter, BindableEvent e) throws PrefilterNonMatchException {
+			if(!(e instanceof MCPlayerArmorChangeEvent)) {
+				return false;
+			}
+			MCPlayerArmorChangeEvent event = (MCPlayerArmorChangeEvent) e;
+			if(prefilter.containsKey("player")
+					&& !event.getPlayer().getName().equals(prefilter.get("player").val())) {
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		public Map<String, Mixed> evaluate(BindableEvent e) throws EventException {
+			MCPlayerArmorChangeEvent event = (MCPlayerArmorChangeEvent) e;
+			Map<String, Mixed> map = new HashMap<>();
+			Target t = Target.UNKNOWN;
+
+			map.put("player", new CString(event.getPlayer().getName(), t));
+			map.put("olditem", ObjectGenerator.GetGenerator().item(event.getOldItem(), t));
+			map.put("newitem",  ObjectGenerator.GetGenerator().item(event.getNewItem(), t));
+			map.put("slottype", new CString(event.getSlotType(), t));
+			return map;
+		}
+
+		@Override
+		public boolean modifyEvent(String key, Mixed value, BindableEvent e) {
 			return false;
 		}
 	}
