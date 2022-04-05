@@ -101,11 +101,11 @@ public class Events {
 				Target t = value.getTarget();
 				if(value instanceof CArray) {
 					CArray ca = (CArray) value;
-					int id = Static.getInt32(ca.get("id", t), t);
-					int strength = Static.getInt32(ca.get("strength", t), t);
-					double seconds = Static.getDouble(ca.get("seconds", t), t);
-					boolean ambient = Static.getBoolean(ca.get("ambient", t), t);
-					boolean particles = Static.getBoolean(ca.get("particles", t), t);
+					int id = ArgumentValidation.getInt32(ca.get("id", t), t);
+					int strength = ArgumentValidation.getInt32(ca.get("strength", t), t);
+					double seconds = ArgumentValidation.getDouble(ca.get("seconds", t), t);
+					boolean ambient = ArgumentValidation.getBooleanObject(ca.get("ambient", t), t);
+					boolean particles = ArgumentValidation.getBooleanObject(ca.get("particles", t), t);
 					event.setEffect(id, strength, (int)(seconds * 20), ambient, particles);
 					return true;
 				} else {

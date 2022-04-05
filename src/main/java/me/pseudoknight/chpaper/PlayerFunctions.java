@@ -3,16 +3,15 @@ package me.pseudoknight.chpaper;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCPlayer;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.ArgumentValidation;
-import com.laytonsmith.core.MSVersion;
-import com.laytonsmith.core.Static;
+import com.laytonsmith.core.*;
+import com.laytonsmith.core.compiler.CompilerEnvironment;
+import com.laytonsmith.core.compiler.CompilerWarning;
+import com.laytonsmith.core.compiler.FileOptions;
 import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.environments.CommandHelperEnvironment;
 import com.laytonsmith.core.environments.Environment;
-import com.laytonsmith.core.exceptions.CRE.CREBadEntityException;
-import com.laytonsmith.core.exceptions.CRE.CRELengthException;
-import com.laytonsmith.core.exceptions.CRE.CREPlayerOfflineException;
-import com.laytonsmith.core.exceptions.CRE.CREThrowable;
+import com.laytonsmith.core.exceptions.CRE.*;
+import com.laytonsmith.core.exceptions.ConfigCompileException;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.natives.interfaces.Mixed;
@@ -20,6 +19,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class PlayerFunctions {
@@ -28,7 +30,7 @@ public class PlayerFunctions {
 	}
 
 	@api
-	public static class set_pview_distance extends AbstractFunction {
+	public static class set_pview_distance extends AbstractFunction implements Optimizable {
 
 		public String getName() {
 			return "set_pview_distance";
@@ -39,7 +41,7 @@ public class PlayerFunctions {
 		}
 
 		public String docs() {
-			return "void {[player], distance} Sets view distance for player in chunks.";
+			return "void {[player], distance} (deprecated) Sets view distance for player in chunks.";
 		}
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
@@ -73,10 +75,26 @@ public class PlayerFunctions {
 			return MSVersion.V3_3_2;
 		}
 
+		@Override
+		public Set<Optimizable.OptimizationOption> optimizationOptions() {
+			return EnumSet.of(
+					Optimizable.OptimizationOption.OPTIMIZE_DYNAMIC
+			);
+		}
+
+		@Override
+		public ParseTree optimizeDynamic(Target t, Environment env,
+				Set<Class<? extends Environment.EnvironmentImpl>> envs,
+				List<ParseTree> children, FileOptions fileOptions) throws ConfigCompileException, ConfigRuntimeException {
+			env.getEnv(CompilerEnvironment.class).addCompilerWarning(fileOptions,
+					new CompilerWarning(getName() + " is deprecated.", t, null));
+			return null;
+		}
+
 	}
 
 	@api
-	public static class pview_distance extends AbstractFunction {
+	public static class pview_distance extends AbstractFunction implements Optimizable {
 
 		public String getName() {
 			return "pview_distance";
@@ -87,7 +105,7 @@ public class PlayerFunctions {
 		}
 
 		public String docs() {
-			return "void {[player]} Gets view distance for player in chunks.";
+			return "void {[player]} (deprecated) Gets view distance for player in chunks.";
 		}
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
@@ -117,6 +135,21 @@ public class PlayerFunctions {
 			return MSVersion.V3_3_2;
 		}
 
+		@Override
+		public Set<OptimizationOption> optimizationOptions() {
+			return EnumSet.of(
+					OptimizationOption.OPTIMIZE_DYNAMIC
+			);
+		}
+
+		@Override
+		public ParseTree optimizeDynamic(Target t, Environment env,
+				Set<Class<? extends Environment.EnvironmentImpl>> envs,
+				List<ParseTree> children, FileOptions fileOptions) throws ConfigCompileException, ConfigRuntimeException {
+			env.getEnv(CompilerEnvironment.class).addCompilerWarning(fileOptions,
+					new CompilerWarning(getName() + " is deprecated.", t, null));
+			return null;
+		}
 	}
 
 	@api
