@@ -11,8 +11,6 @@ Gets whether or not this player affects mob spawning.
 #### void set_paffects_spawning([player], boolean)
 Sets whether or not this player affects mob spawning.
 
-The following functions allow you to set view distance per player. There's some quirks to note, however. If player view distance is greater than world view distance, entity tracking range will be limited to the world's view distance. If player view distance is less than world view distance, chunks will still be sent according to world view distance when crossing chunk boundaries.
-
 ### World Mob Spawning Control
 These functions are not Paper-specific and will likely be moved to CommandHelper core at some point under different function names. I forgot to remove them before publishing, but enjoy them for now.
 
