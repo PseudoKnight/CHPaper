@@ -255,7 +255,7 @@ public class PlayerFunctions {
 		}
 
 		public String docs() {
-			return "UUID {fireworkUUID} Gets the entity that spawned this firework, or null if none exists.";
+			return "UUID {fireworkUUID} Returns the UUID for the entity that spawned this firework, or null if none exists.";
 		}
 
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {

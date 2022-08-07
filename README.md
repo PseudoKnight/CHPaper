@@ -4,6 +4,15 @@ Gives access to API available in Paper but not Bukkit or Spigot.
 
 ## Function Documentation
 
+#### UUID get_firework_shooter(fireworkUUID)
+Returns the UUID for the entity that spawned this firework, or null if none exists.
+
+#### int get_world_view_distance(world)
+Returns the view distance (in chunks) for a world.
+
+#### void set_world_view_distance(world, distance)
+Sets the view distance (in chunks) for a world.
+
 ### Player Management
 #### boolean get_paffects_spawning([player])
 Gets whether or not this player affects mob spawning.
@@ -19,9 +28,6 @@ Gets the entity spawn settings for this world.
 
 #### void set_spawning(world, settingsArray)
 Sets the entity spawn settings for this world.
-
-#### UUID get_firework_shooter(fireworkUUID)
-Gets the entity that spawned this firework, or null if none exists.
 
 ### Mob Management
 

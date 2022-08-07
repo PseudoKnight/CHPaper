@@ -5,6 +5,7 @@ import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCLivingEntity;
 import com.laytonsmith.abstraction.MCLocation;
 import com.laytonsmith.abstraction.MCPlayer;
+import com.laytonsmith.abstraction.MCWorld;
 import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.ArgumentValidation;
@@ -279,7 +280,7 @@ public class Functions {
 			return "boolean {entity, destination, [speedMultiplier]} Finds and sets a path for a mob."
 					+ " Accepts a location array or a living entity UUID as its destination."
 					+ " An optional speed multiplier can be given, which will temporarily hasten the mob to the destination."
-					+ " Returns whether it was successful or not."
+					+ " Returns whether it was successful or not. (will fail on the first tick after mob spawn)"
 					+ " Note that a mob's AI may forget or change its destination at any time.";
 		}
 
@@ -339,6 +340,86 @@ public class Functions {
 			return "array {entity} Returns an array of location arrays along the mob's current path,"
 					+ " starting with the next location and ending with the final destination."
 					+ " Returns null if the mob has no current path.";
+		}
+
+		public Version since() {
+			return MSVersion.V3_3_4;
+		}
+
+	}
+
+	@api
+	public static class get_world_view_distance extends AbstractFunction {
+
+		public Class<? extends CREThrowable>[] thrown() {
+			return new Class[]{CREInvalidWorldException.class};
+		}
+
+		public boolean isRestricted() {
+			return true;
+		}
+
+		public Boolean runAsync() {
+			return false;
+		}
+
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
+			MCWorld w = Static.getWorld(args[0].val(), t);
+			int viewDistance = ((World) w.getHandle()).getViewDistance();
+			return new CInt(viewDistance, t);
+		}
+
+		public String getName() {
+			return "get_world_view_distance";
+		}
+
+		public Integer[] numArgs() {
+			return new Integer[]{1};
+		}
+
+		public String docs() {
+			return "int {world} Returns the view distance (in chunks) for a world.";
+		}
+
+		public Version since() {
+			return MSVersion.V3_3_4;
+		}
+
+	}
+
+	@api
+	public static class set_world_view_distance extends AbstractFunction {
+
+		public Class<? extends CREThrowable>[] thrown() {
+			return new Class[]{CREInvalidWorldException.class, CRERangeException.class, CRECastException.class};
+		}
+
+		public boolean isRestricted() {
+			return true;
+		}
+
+		public Boolean runAsync() {
+			return false;
+		}
+
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
+			MCWorld w = Static.getWorld(args[0].val(), t);
+			int viewDistance = ArgumentValidation.getInt32(args[1], t);
+			((World) w.getHandle()).setViewDistance(viewDistance);
+			return CVoid.VOID;
+		}
+
+		public String getName() {
+			return "set_world_view_distance";
+		}
+
+		public Integer[] numArgs() {
+			return new Integer[]{2};
+		}
+
+		public String docs() {
+			return "void {world, distance} Sets the view distance (in chunks) for a world."
+					+ " Cannot be set lower than simulation distance.";
 		}
 
 		public Version since() {
