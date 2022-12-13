@@ -6,18 +6,15 @@ import com.laytonsmith.abstraction.MCLivingEntity;
 import com.laytonsmith.abstraction.MCLocation;
 import com.laytonsmith.abstraction.MCPlayer;
 import com.laytonsmith.abstraction.MCWorld;
+import com.laytonsmith.abstraction.blocks.MCBlockState;
+import com.laytonsmith.abstraction.blocks.MCCommandBlock;
 import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.ArgumentValidation;
 import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.ObjectGenerator;
 import com.laytonsmith.core.Static;
-import com.laytonsmith.core.constructs.CArray;
-import com.laytonsmith.core.constructs.CBoolean;
-import com.laytonsmith.core.constructs.CInt;
-import com.laytonsmith.core.constructs.CNull;
-import com.laytonsmith.core.constructs.CVoid;
-import com.laytonsmith.core.constructs.Target;
+import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.exceptions.CRE.*;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
@@ -25,6 +22,7 @@ import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.natives.interfaces.Mixed;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.CommandBlock;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
@@ -424,6 +422,107 @@ public class Functions {
 
 		public Version since() {
 			return MSVersion.V3_3_4;
+		}
+
+	}
+
+	@api
+	public static class get_command_block_success extends AbstractFunction {
+
+		public Class<? extends CREThrowable>[] thrown() {
+			return new Class[]{CREInvalidWorldException.class, CRERangeException.class, CRECastException.class,
+					CREFormatException.class};
+		}
+
+		public boolean isRestricted() {
+			return true;
+		}
+
+		public Boolean runAsync() {
+			return false;
+		}
+
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
+			MCLocation loc = ObjectGenerator.GetGenerator().location(args[0], null, t);
+			if(loc.getBlock().isCommandBlock()) {
+				MCCommandBlock cb = loc.getBlock().getCommandBlock();
+				try {
+					return new CInt(((CommandBlock) cb.getHandle()).getSuccessCount(), t);
+				} catch(NoSuchMethodError ex) {
+					throw new CREException("This function requires Paper 1.17 or higher.", t);
+				}
+			}
+			throw new CREException("The block at the specified location is not a commandblock", t);
+		}
+
+		public String getName() {
+			return "get_command_block_success";
+		}
+
+		public Integer[] numArgs() {
+			return new Integer[]{1};
+		}
+
+		public String docs() {
+			return "int {location} Gets the success count for a commandblock.";
+		}
+
+		public Version since() {
+			return MSVersion.V3_3_5;
+		}
+
+	}
+
+	@api
+	public static class set_command_block_success extends AbstractFunction {
+
+		public Class<? extends CREThrowable>[] thrown() {
+			return new Class[]{CREInvalidWorldException.class, CRERangeException.class, CRECastException.class,
+					CREFormatException.class};
+		}
+
+		public boolean isRestricted() {
+			return true;
+		}
+
+		public Boolean runAsync() {
+			return false;
+		}
+
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
+			MCLocation loc = ObjectGenerator.GetGenerator().location(args[0], null, t);
+			int count = ArgumentValidation.getInt32(args[1], t);
+			if(loc.getBlock().isCommandBlock()) {
+				MCCommandBlock cb = loc.getBlock().getCommandBlock();
+				try {
+					((CommandBlock) cb.getHandle()).setSuccessCount(count);
+				} catch(NoSuchMethodError ex) {
+					throw new CREException("This function requires Paper 1.17 or higher.", t);
+				}
+				cb.update();
+			} else {
+				throw new CREException("The block at the specified location is not a commandblock", t);
+			}
+			return CVoid.VOID;
+		}
+
+		public String getName() {
+			return "set_command_block_success";
+		}
+
+		public Integer[] numArgs() {
+			return new Integer[]{2};
+		}
+
+		public String docs() {
+			return "void {location, int} Sets the success count for a commandblock."
+					+ " Plugin commands will increment the success count of commandblocks by one afterwards."
+					+ " So when setting the success count inside a command,"
+					+ " make sure to subtract one below the desired result.";
+		}
+
+		public Version since() {
+			return MSVersion.V3_3_5;
 		}
 
 	}

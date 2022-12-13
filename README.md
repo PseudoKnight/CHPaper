@@ -16,6 +16,12 @@ Returns the UUID for the entity that spawned this firework, or null if none exis
 #### int get_world_view_distance(world)
 Returns the view distance (in chunks) for a world.
 
+#### int get_command_block_success(location)
+Gets the success count for a commandblock.
+
+#### void set_command_block_success(location, int)
+Sets the success count for a commandblock.
+
 #### void set_world_view_distance(world, distance)
 Sets the view distance (in chunks) for a world.
 
