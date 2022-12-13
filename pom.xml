@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.pseudoknight</groupId>
     <artifactId>chpaper</artifactId>
-    <version>0.3.5</version>
+    <version>0.4.0</version>
     <name>CHPaper</name>
     <description>Gives access to methods available in PaperSpigot but not Bukkit or Spigot</description>
     
@@ -16,64 +16,51 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.10.1</version>
                 <configuration>
                     <showDeprecation>true</showDeprecation>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>16</release>
                     <compilerArgument>-XDignore.symbol.file</compilerArgument>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                
+                <version>3.2.2</version>
                 <configuration>
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
-                        
                         <manifest>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
-                        
                     </archive>
                 </configuration>
-                
-                <version>2.4</version>
             </plugin>
-            
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
-                <version>2.2.4</version>
-        
+                <version>5.0-jdk8-rc3</version>
                 <executions>
                     <execution>
                         <id>process</id>
                         <phase>process-classes</phase>
-                        
                         <goals>
                             <goal>process</goal>
                         </goals>
                     </execution>
                 </executions>
-        
                 <configuration>
                     <outputDirectory>src/main/generated</outputDirectory>
-          
                     <processors>
                         <processor>com.laytonsmith.core.extensions.ExtensionAnnotationProcessor</processor>
                     </processors>
                 </configuration>
             </plugin>
-            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-        
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>cache-annotations</id>
@@ -83,10 +70,8 @@
                         </goals>
                     </execution>
                 </executions>
-        
                 <configuration>
                     <mainClass>com.laytonsmith.PureUtilities.ClassLoading.Annotations.CacheAnnotations</mainClass>
-          
                     <arguments>
                         <argument>${basedir}/target/classes</argument>
                         <argument>${basedir}/target/classes</argument>
@@ -97,24 +82,21 @@
     </build>
     <repositories>
         <repository>
-            <id>enginehub-maven</id>
-            <url>https://maven.enginehub.org/repo/</url>
-        </repository>
-        <repository>
-            <id>destroystokyo-repo</id>
-            <url>https://repo.destroystokyo.com/repository/maven-public/</url>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
     </repositories>
     <dependencies>
         <dependency>
-            <groupId>com.destroystokyo.paper</groupId>
+            <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>LATEST</version>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>commandhelper</artifactId>
-            <version>3.3.4-SNAPSHOT</version>
+            <version>3.3.5-SNAPSHOT</version>
+            <classifier>full</classifier>
         </dependency>
     </dependencies>
 </project>

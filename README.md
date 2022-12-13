@@ -2,6 +2,12 @@
 
 Gives access to API available in Paper but not Bukkit or Spigot.
 
+## Compatibility
+
+CHPaper 0.3.5 requires CommandHelper 3.3.5 (Paper 1.17+)
+CHPaper 0.3.4 requires CommandHelper 3.3.4/3.3.5 (Paper 1.13.2+)  
+CHPaper 0.2.1 requires CommandHelper 3.3.2 (Paper 1.7.10 - 1.12.2)  
+
 ## Function Documentation
 
 #### UUID get_firework_shooter(fireworkUUID)
