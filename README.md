@@ -4,7 +4,7 @@ Gives access to API available in Paper but not Bukkit or Spigot.
 
 ## Compatibility
 
-CHPaper 0.4.0 requires CommandHelper 3.3.5 (Paper 1.16.5+)
+CHPaper 0.4.0 requires CommandHelper 3.3.5 (Paper 1.16.5+)  
 CHPaper 0.3.5 requires CommandHelper 3.3.4/3.3.5 (Paper 1.13.2+)  
 CHPaper 0.2.1 requires CommandHelper 3.3.2 (Paper 1.7.10 - 1.12.2)  
 
@@ -16,14 +16,14 @@ Returns the UUID for the entity that spawned this firework, or null if none exis
 #### int get_world_view_distance(world)
 Returns the view distance (in chunks) for a world.
 
+#### void set_world_view_distance(world, distance)
+Sets the view distance (in chunks) for a world.
+
 #### int get_command_block_success(location)
 Gets the success count for a commandblock.
 
 #### void set_command_block_success(location, int)
 Sets the success count for a commandblock.
-
-#### void set_world_view_distance(world, distance)
-Sets the view distance (in chunks) for a world.
 
 ### Player Management
 #### boolean get_paffects_spawning([player])
