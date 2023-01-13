@@ -2,11 +2,11 @@ package me.pseudoknight.chpaper;
 
 import com.destroystokyo.paper.entity.Pathfinder;
 import com.laytonsmith.PureUtilities.Version;
+import com.laytonsmith.abstraction.MCCommandSender;
 import com.laytonsmith.abstraction.MCLivingEntity;
 import com.laytonsmith.abstraction.MCLocation;
 import com.laytonsmith.abstraction.MCPlayer;
 import com.laytonsmith.abstraction.MCWorld;
-import com.laytonsmith.abstraction.blocks.MCBlockState;
 import com.laytonsmith.abstraction.blocks.MCCommandBlock;
 import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
 import com.laytonsmith.annotations.api;
@@ -15,6 +15,7 @@ import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.ObjectGenerator;
 import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.*;
+import com.laytonsmith.core.environments.CommandHelperEnvironment;
 import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.exceptions.CRE.*;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
@@ -23,6 +24,7 @@ import com.laytonsmith.core.natives.interfaces.Mixed;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.CommandBlock;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
@@ -464,7 +466,7 @@ public class Functions {
 		}
 
 		public String docs() {
-			return "int {location} Gets the success count for a commandblock.";
+			return "int {location} Gets the success count for a commandblock. (1.17)";
 		}
 
 		public Version since() {
@@ -515,10 +517,65 @@ public class Functions {
 		}
 
 		public String docs() {
-			return "void {location, int} Sets the success count for a commandblock."
+			return "void {location, int} Sets the success count for a commandblock. (1.17)"
 					+ " Plugin commands will increment the success count of commandblocks by one afterwards."
 					+ " So when setting the success count inside a command,"
 					+ " make sure to subtract one below the desired result.";
+		}
+
+		public Version since() {
+			return MSVersion.V3_3_5;
+		}
+
+	}
+
+	@api
+	public static class minimessage extends AbstractFunction {
+
+		public Class<? extends CREThrowable>[] thrown() {
+			return new Class[]{CREPlayerOfflineException.class};
+		}
+
+		public boolean isRestricted() {
+			return true;
+		}
+
+		public Boolean runAsync() {
+			return false;
+		}
+
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
+			MCCommandSender sender;
+			String message;
+			if(args.length == 2) {
+				sender = Static.GetCommandSender(args[0].val(), t);
+				message = args[1].val();
+			} else {
+				sender = environment.getEnv(CommandHelperEnvironment.class).GetCommandSender();
+				if(sender == null) {
+					throw new CREPlayerOfflineException("No recipient to send minimessage to.", t);
+				}
+				message = args[0].val();
+			}
+			try {
+				((CommandSender) sender.getHandle()).sendRichMessage(message);
+			} catch(NoSuchMethodError ex) {
+				throw new CREException("minimessage() requires Paper 1.19 or higher.", t);
+			}
+			return CVoid.VOID;
+		}
+
+		public String getName() {
+			return "minimessage";
+		}
+
+		public Integer[] numArgs() {
+			return new Integer[]{1, 2};
+		}
+
+		public String docs() {
+			return "void {[recipient], message} Sends a MiniMessage formatted message. (1.19)"
+					+ " If recipient argument is absent, command sender from current context is used.";
 		}
 
 		public Version since() {

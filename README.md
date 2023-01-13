@@ -4,7 +4,7 @@ Gives access to API available in Paper but not Bukkit or Spigot.
 
 ## Compatibility
 
-CHPaper 0.4.0 requires CommandHelper 3.3.5 (Paper 1.16.5+)  
+CHPaper 0.4.0 requires CommandHelper 3.3.5 (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
 CHPaper 0.3.5 requires CommandHelper 3.3.4/3.3.5 (Paper 1.13.2+)  
 CHPaper 0.2.1 requires CommandHelper 3.3.2 (Paper 1.7.10 - 1.12.2)  
 
@@ -20,12 +20,14 @@ Returns the view distance (in chunks) for a world.
 Sets the view distance (in chunks) for a world.
 
 #### int get_command_block_success(location)
-Gets the success count for a commandblock.
+Gets the success count for a commandblock. (1.17)
 
 #### void set_command_block_success(location, int)
-Sets the success count for a commandblock.
+Sets the success count for a commandblock. (1.17)
 
-### Player Management
+#### void minimessage([recipient], message)
+Sends a MiniMessage formatted message. (1.19)
+
 #### boolean get_paffects_spawning([player])
 Gets whether or not this player affects mob spawning.
 
