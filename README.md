@@ -4,7 +4,7 @@ Gives access to API available in Paper but not Bukkit or Spigot.
 
 ## Compatibility
 
-CHPaper 0.4.0 requires CommandHelper 3.3.5 (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
+CHPaper 0.4.0 requires CommandHelper 3.3.5 #256 or later (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
 CHPaper 0.3.5 requires CommandHelper 3.3.4 - 3.3.5 #255 (Paper 1.13.2 - 1.18.2)  
 CHPaper 0.2.1 requires CommandHelper 3.3.2 (Paper 1.7.10 - 1.12.2)  
 
