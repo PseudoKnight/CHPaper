@@ -88,15 +88,15 @@
     </repositories>
     <dependencies>
         <dependency>
-            <groupId>io.papermc.paper</groupId>
-            <artifactId>paper-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>commandhelper</artifactId>
             <version>3.3.5-SNAPSHOT</version>
             <classifier>full</classifier>
+        </dependency>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
