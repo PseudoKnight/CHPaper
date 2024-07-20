@@ -136,7 +136,3 @@ This event is called when a player's armor slot changes by any cause, including 
 * **olditem:** The item array for the old item (or null)
 * **newitem:** The item array for the new item (or null)
 * **slottype:** The armor slot changed (HEAD, CHEST, LEGS, FEET)
-
-#### Mutable Fields
-
-* **from**
