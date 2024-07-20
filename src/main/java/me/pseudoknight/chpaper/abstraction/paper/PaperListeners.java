@@ -26,6 +26,7 @@ public class PaperListeners implements Listener {
 	public static void unregister() {
 		BeaconEffectEvent.getHandlerList().unregister(listener);
 		PlayerJumpEvent.getHandlerList().unregister(listener);
+		PlayerArmorChangeEvent.getHandlerList().unregister(listener);
 		PlayerElytraBoostEvent.getHandlerList().unregister(listener);
 		EntityRemoveFromWorldEvent.getHandlerList().unregister(listener);
 	}
