@@ -36,7 +36,7 @@ public class PlayerFunctions {
 		}
 
 		public String docs() {
-			return "void {[player], distance} (deprecated) Sets view distance for player in chunks.";
+			return "void {[player], distance} Sets view distance for player in chunks.";
 		}
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
@@ -84,7 +84,7 @@ public class PlayerFunctions {
 		}
 
 		public String docs() {
-			return "void {[player]} (deprecated) Gets view distance for player in chunks.";
+			return "void {[player]} Gets view distance for player in chunks.";
 		}
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {

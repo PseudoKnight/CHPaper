@@ -2,10 +2,10 @@
 
 Gives access to API available in Paper but not Bukkit or Spigot.
 
-## Compatibility
+## Recommended Builds
 
 CHPaper 0.4.2 requires CommandHelper 3.3.5 #256 or later (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
-CHPaper 0.3.5 requires CommandHelper 3.3.4 - 3.3.5 #255 (Paper 1.13.2 - 1.18.2)  
+CHPaper 0.3.2 requires CommandHelper 3.3.4 (Paper 1.13.2 - 1.16.5)  
 CHPaper 0.2.1 requires CommandHelper 3.3.2 (Paper 1.7.10 - 1.12.2)  
 
 ## Function Documentation
@@ -33,6 +33,12 @@ Gets whether or not this player affects mob spawning.
 
 #### void set_paffects_spawning([player], boolean)
 Sets whether or not this player affects mob spawning.
+
+#### pview_distance([player])
+Gets view distance for player in chunks.
+
+#### set_pview_distance([player], distance)
+Sets view distance for player in chunks.
 
 ### World Mob Spawning Control
 These functions are not Paper-specific and will likely be moved to CommandHelper core at some point under different function names. I forgot to remove them before publishing, but enjoy them for now.
