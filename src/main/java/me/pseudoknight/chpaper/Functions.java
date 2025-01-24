@@ -56,23 +56,20 @@ public class Functions {
 			CArray values = CArray.GetAssociativeArray(t);
 			values.set("animal-spawns", CBoolean.get(w.getAllowAnimals()), t);
 			values.set("monster-spawns", CBoolean.get(w.getAllowMonsters()), t);
+
+			// switch to getSpawnLimit(Category) after 1.18.1
 			values.set("ambient-spawn-limit", new CInt(w.getAmbientSpawnLimit(), t), t);
 			values.set("wateranimal-spawn-limit", new CInt(w.getWaterAnimalSpawnLimit(), t), t);
 			values.set("animal-spawn-limit", new CInt(w.getAnimalSpawnLimit(), t), t);
 			values.set("monster-spawn-limit", new CInt(w.getMonsterSpawnLimit(), t), t);
+			values.set("water-ambient-spawn-limit", new CInt(w.getWaterAmbientSpawnLimit(), t), t);
+
+			// switch to getTicksPerSpawns(Category) after 1.18.1
 			values.set("ticks-per-animal-spawns", new CInt(w.getTicksPerAnimalSpawns(), t), t);
 			values.set("ticks-per-monster-spawns", new CInt(w.getTicksPerMonsterSpawns(), t), t);
-			try {
-				// 1.15.2
-				values.set("ticks-per-ambient-spawns", new CInt(w.getTicksPerAmbientSpawns(), t), t);
-				values.set("ticks-per-water-spawns", new CInt(w.getTicksPerWaterSpawns(), t), t);
-
-				// 1.16.1
-				values.set("water-ambient-spawn-limit", new CInt(w.getWaterAmbientSpawnLimit(), t), t);
-				values.set("ticks-per-water-ambient-spawns", new CInt(w.getTicksPerWaterAmbientSpawns(), t), t);
-			} catch(NoSuchMethodError ex) {
-				// earlier server version
-			}
+			values.set("ticks-per-ambient-spawns", new CInt(w.getTicksPerAmbientSpawns(), t), t);
+			values.set("ticks-per-water-spawns", new CInt(w.getTicksPerWaterSpawns(), t), t);
+			values.set("ticks-per-water-ambient-spawns", new CInt(w.getTicksPerWaterAmbientSpawns(), t), t);
 			return(values);
 		}
 
@@ -111,9 +108,7 @@ public class Functions {
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
 			World w = (World) Static.getWorld(args[0].val(), t).getHandle();
-			if(args[1] instanceof CArray) {
-				CArray values = (CArray) args[1];
-
+			if(args[1] instanceof CArray values) {
 				boolean animalspawns = w.getAllowAnimals();
 				boolean monsterspawns = w.getAllowMonsters();
 				if(values.containsKey("animal-spawns")) {
@@ -124,6 +119,7 @@ public class Functions {
 				}
 				w.setSpawnFlags(monsterspawns, animalspawns);
 
+				// switch to setSpawnLimit(Category, int) after 1.18.1
 				if(values.containsKey("ambient-spawn-limit")) {
 					w.setAmbientSpawnLimit(ArgumentValidation.getInt32(values.get("ambient-spawn-limit", t), t));
 				}
@@ -136,32 +132,25 @@ public class Functions {
 				if(values.containsKey("monster-spawn-limit")) {
 					w.setMonsterSpawnLimit(ArgumentValidation.getInt32(values.get("monster-spawn-limit", t), t));
 				}
+				if(values.containsKey("water-ambient-spawn-limit")) {
+					w.setWaterAmbientSpawnLimit(ArgumentValidation.getInt32(values.get("water-ambient-spawn-limit", t), t));
+				}
 
+				// switch to setTicksPerSpawns(Category, int) after 1.18.1
 				if(values.containsKey("ticks-per-animal-spawns")) {
 					w.setTicksPerAnimalSpawns(ArgumentValidation.getInt32(values.get("ticks-per-animal-spawns", t), t));
 				}
 				if(values.containsKey("ticks-per-monster-spawns")) {
 					w.setTicksPerMonsterSpawns(ArgumentValidation.getInt32(values.get("ticks-per-monster-spawns", t), t));
 				}
-
-				try {
-					// 1.15.2
-					if(values.containsKey("ticks-per-ambient-spawns")) {
-						w.setTicksPerAmbientSpawns(ArgumentValidation.getInt32(values.get("ticks-per-ambient-spawns", t), t));
-					}
-					if(values.containsKey("ticks-per-water-spawns")) {
-						w.setTicksPerWaterSpawns(ArgumentValidation.getInt32(values.get("ticks-per-water-spawns", t), t));
-					}
-
-					// 1.16.1
-					if(values.containsKey("ticks-per-water-ambient-spawns")) {
-						w.setTicksPerWaterAmbientSpawns(ArgumentValidation.getInt32(values.get("ticks-per-water-ambient-spawns", t), t));
-					}
-					if(values.containsKey("water-ambient-spawn-limit")) {
-						w.setWaterAmbientSpawnLimit(ArgumentValidation.getInt32(values.get("water-ambient-spawn-limit", t), t));
-					}
-				} catch (NoSuchMethodError ex) {
-					// earlier server version
+				if(values.containsKey("ticks-per-ambient-spawns")) {
+					w.setTicksPerAmbientSpawns(ArgumentValidation.getInt32(values.get("ticks-per-ambient-spawns", t), t));
+				}
+				if(values.containsKey("ticks-per-water-spawns")) {
+					w.setTicksPerWaterSpawns(ArgumentValidation.getInt32(values.get("ticks-per-water-spawns", t), t));
+				}
+				if(values.containsKey("ticks-per-water-ambient-spawns")) {
+					w.setTicksPerWaterAmbientSpawns(ArgumentValidation.getInt32(values.get("ticks-per-water-ambient-spawns", t), t));
 				}
 
 			} else {
@@ -365,6 +354,7 @@ public class Functions {
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
 			MCWorld w = Static.getWorld(args[0].val(), t);
+			// Added to Spigot in 1.20.4
 			int viewDistance = ((World) w.getHandle()).getViewDistance();
 			return new CInt(viewDistance, t);
 		}
@@ -405,6 +395,7 @@ public class Functions {
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
 			MCWorld w = Static.getWorld(args[0].val(), t);
 			int viewDistance = ArgumentValidation.getInt32(args[1], t);
+			// Added to Spigot in 1.20.4
 			((World) w.getHandle()).setViewDistance(viewDistance);
 			return CVoid.VOID;
 		}
