@@ -36,7 +36,7 @@ public class PlayerFunctions {
 		}
 
 		public String docs() {
-			return "void {[player], distance} Sets view distance for player in chunks.";
+			return "void {[player], distance} Sets view distance for player in chunks. (2 - 32)";
 		}
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
@@ -50,7 +50,7 @@ public class PlayerFunctions {
 				p = Static.GetPlayer(args[0], t);
 				distance = ArgumentValidation.getInt32(args[1], t);
 			}
-			((Player) p.getHandle()).setViewDistance(distance);
+			((Player) p.getHandle()).setViewDistance(Math.min(Math.max(distance, 2), 32));
 			return CVoid.VOID;
 		}
 
@@ -72,6 +72,7 @@ public class PlayerFunctions {
 
 	}
 
+	// Added to Spigot as getClientViewDistance(), but not setViewDistance()
 	@api
 	public static class pview_distance extends AbstractFunction {
 

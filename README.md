@@ -38,7 +38,7 @@ Sets whether or not this player affects mob spawning.
 Gets view distance for player in chunks.
 
 #### set_pview_distance([player], distance)
-Sets view distance for player in chunks.
+Sets view distance for player in chunks. (2 - 32)
 
 ### World Mob Spawning Control
 These functions are not Paper-specific and will likely be moved to CommandHelper core at some point under different function names. I forgot to remove them before publishing, but enjoy them for now.
