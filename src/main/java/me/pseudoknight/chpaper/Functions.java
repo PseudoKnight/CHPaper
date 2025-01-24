@@ -549,9 +549,9 @@ public class Functions {
 				message = args[0].val();
 			}
 			try {
-				((CommandSender) sender.getHandle()).sendRichMessage(message);
-			} catch(NoSuchMethodError ex) {
-				throw new CREException("minimessage() requires Paper 1.19 or higher.", t);
+				((CommandSender) sender.getHandle()).sendMessage(net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(message));
+			} catch(NoClassDefFoundError ex) {
+				throw new CREException("minimessage() requires Paper 1.18.2+.", t);
 			}
 			return CVoid.VOID;
 		}
@@ -565,7 +565,7 @@ public class Functions {
 		}
 
 		public String docs() {
-			return "void {[recipient], message} Sends a MiniMessage formatted message. (1.19)"
+			return "void {[recipient], message} Sends a MiniMessage formatted message. (requires Paper 1.18.2+)"
 					+ " If recipient argument is absent, command sender from current context is used.";
 		}
 

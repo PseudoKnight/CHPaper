@@ -26,7 +26,7 @@ Gets the success count for a commandblock. (1.17)
 Sets the success count for a commandblock. (1.17)
 
 #### void minimessage([recipient], message)
-Sends a MiniMessage formatted message. (1.19)
+Sends a MiniMessage formatted message. (requires Paper 1.18.2+)
 
 #### boolean get_paffects_spawning([player])
 Gets whether or not this player affects mob spawning.
