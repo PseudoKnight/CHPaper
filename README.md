@@ -4,7 +4,7 @@ Gives access to API available in Paper but not Bukkit or Spigot.
 
 ## Recommended Builds
 
-CHPaper 0.4.2 requires CommandHelper 3.3.5 #256 or later (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
+CHPaper 0.4.4 requires CommandHelper 3.3.5 #256 or later (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
 CHPaper 0.3.2 requires CommandHelper 3.3.4 (Paper 1.13.2 - 1.16.5)  
 CHPaper 0.2.1 requires CommandHelper 3.3.2 (Paper 1.7.10 - 1.12.2)  
 
@@ -25,7 +25,7 @@ Gets the success count for a commandblock. (1.17)
 #### void set_command_block_success(location, int)
 Sets the success count for a commandblock. (1.17)
 
-#### void minimessage([recipient], message)
+#### void minimessage([recipient(s)], message)
 Sends a MiniMessage formatted message. (requires Paper 1.18.2+)
 
 #### boolean get_paffects_spawning([player])

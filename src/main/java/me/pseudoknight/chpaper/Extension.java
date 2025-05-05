@@ -10,7 +10,7 @@ import me.pseudoknight.chpaper.abstraction.paper.PaperListeners;
 @MSExtension("CHPaper")
 public class Extension extends AbstractExtension {
 
-	private static final Version version = new SimpleVersion(0,4,3);
+	private static final Version version = new SimpleVersion(0,4,4);
 
 	@Override
 	public Version getVersion() {

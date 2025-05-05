@@ -21,6 +21,8 @@ import com.laytonsmith.core.exceptions.CRE.*;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.natives.interfaces.Mixed;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.CommandBlock;
@@ -536,20 +538,23 @@ public class Functions {
 		}
 
 		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
-			MCCommandSender sender;
-			String message;
-			if(args.length == 2) {
-				sender = Static.GetCommandSender(args[0].val(), t);
-				message = args[1].val();
-			} else {
-				sender = environment.getEnv(CommandHelperEnvironment.class).GetCommandSender();
-				if(sender == null) {
-					throw new CREPlayerOfflineException("No recipient to send minimessage to.", t);
-				}
-				message = args[0].val();
-			}
 			try {
-				((CommandSender) sender.getHandle()).sendMessage(net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(message));
+				Component msg = MiniMessage.miniMessage().deserialize(args[args.length - 1].val());
+				if(args.length == 2) {
+					if(args[0] instanceof CArray) {
+						for(Mixed p : ((CArray) args[0]).asList()) {
+							((CommandSender) Static.GetCommandSender(p.val(), t).getHandle()).sendMessage(msg);
+						}
+					} else {
+						((CommandSender) Static.GetCommandSender(args[0].val(), t).getHandle()).sendMessage(msg);
+					}
+				} else {
+					MCCommandSender sender = environment.getEnv(CommandHelperEnvironment.class).GetCommandSender();
+					if(sender == null) {
+						throw new CREPlayerOfflineException("No recipient to send minimessage to.", t);
+					}
+					((CommandSender) sender.getHandle()).sendMessage(msg);
+				}
 			} catch(NoClassDefFoundError ex) {
 				throw new CREException("minimessage() requires Paper 1.18.2+.", t);
 			}
