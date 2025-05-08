@@ -4,8 +4,8 @@ Gives access to API available in Paper but not Bukkit or Spigot.
 
 ## Recommended Builds
 
-CHPaper 0.4.4 requires CommandHelper 3.3.5 #256 or later (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
-CHPaper 0.3.2 requires CommandHelper 3.3.4 (Paper 1.13.2 - 1.16.5)  
+CHPaper 0.4.x requires CommandHelper 3.3.5 #256 or later (Paper 1.16.5+) (NOTE: some functions require later Paper versions)  
+CHPaper 0.3.x requires CommandHelper 3.3.4 (Paper 1.13.2 - 1.16.5)  
 CHPaper 0.2.1 requires CommandHelper 3.3.2 (Paper 1.7.10 - 1.12.2)  
 
 ## Function Documentation
@@ -50,9 +50,6 @@ Gets the entity spawn settings for this world.
 Sets the entity spawn settings for this world.
 
 ### Mob Management
-
-#### void set_mob_killer(entityID, player)
-Sets the killer of a mob/player to the specified player.
 
 #### boolean set_mob_destination(entityID, destination, [speedMultiplier])
 Finds and sets a path for a mob to a location or living entity.
